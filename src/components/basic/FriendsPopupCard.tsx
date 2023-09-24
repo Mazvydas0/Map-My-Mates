@@ -10,7 +10,7 @@ export default function FriendsPopupCard({
   metPlace,
   details,
 }: any) {
-  console.log("Freinds popup Cards =====", name, profile, location);
+  console.log("Friends popup Cards =====", name, profile, location);
   return (
     <div className="p-2 h-64 flex flex-col ">
       <div className=" rounded-full">
