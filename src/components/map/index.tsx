@@ -72,6 +72,7 @@ export default function MateMap() {
                   className="rounded-lg shadow-zinc-600"
                 >
                   <FriendsPopupCard
+                    id={pin.id}
                     name={pin.name}
                     profile={pin.profile}
                     location={pin.location}
