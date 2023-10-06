@@ -1,5 +1,5 @@
 import React from "react";
-import SideMenuItems from "./SideMenu";
+import SideMenuItems from "./SideMenuItems";
 import MenuDetails from "./MenuDetails";
 import MateMap from "../map";
 

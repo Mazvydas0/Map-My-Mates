@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.1",
+    "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-popover": "^1.0.6",
     "@radix-ui/react-slot": "^1.0.2",
@@ -23,6 +24,7 @@
     "date-fns": "^2.30.0",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.7",
+    "framer-motion": "^10.12.18",
     "lucide-react": "^0.257.0",
     "mapbox-gl": "^2.15.0",
     "next": "13.4.7",

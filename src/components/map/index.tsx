@@ -45,9 +45,8 @@ export default function MateMap() {
 
         {friendspinData.map((pin, index) => {
           return (
-            <div>
+            <div key={index}>
               <Marker
-                key={index}
                 longitude={pin.location.Longitude}
                 latitude={pin.location.Latitude}
               >
