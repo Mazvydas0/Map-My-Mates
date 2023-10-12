@@ -75,9 +75,9 @@ export default function ImageSlider({ images }: any) {
     <div className="pt-10  mx-5">
       {
         <Slider {...settings} ref={slider}>
-          {images.map((image: any) => {
+          {images.map((image: any, index: any) => {
             return (
-              <div>
+              <div key={index}>
                 <Image
                   className="object-cover"
                   width={180}

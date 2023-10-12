@@ -10,12 +10,13 @@ import { useEffect, useState, useRef } from "react";
 import friendsPins from "@/assets/FriendsPinsData";
 import { MdLocationOn } from "react-icons/md";
 import FriendsPopupCard from "../basic/FriendsPopupCard";
-import { Skeleton } from "../ui/skeleton";
-import Image from "next/image";
+import eventsData from "@/assets/eventsDummyData";
+import EventsPopupCard from "../basic/EventsPopupCard";
 
 export default function MateMap() {
   let [showPopup, setShowPopup] = useState<boolean>();
   const [friendspinData, setFriendspinData] = useState(friendsPins);
+  const [eventsPinData, setEventsPinData] = useState(eventsData);
   const [selectedMarkerId, setSelectedMarkerId] = useState(null);
   const mapRef = useRef(null);
 
@@ -47,6 +48,7 @@ export default function MateMap() {
           return (
             <div key={index}>
               <Marker
+                key={index}
                 longitude={pin.location.Longitude}
                 latitude={pin.location.Latitude}
               >
@@ -76,6 +78,48 @@ export default function MateMap() {
                     profile={pin.profile}
                     location={pin.location}
                     metPlace={pin.metAt}
+                    details={pin.details}
+                  />
+                </Popup>
+              ) : null}
+            </div>
+          );
+        })}
+
+        {eventsPinData.map((pin, index) => {
+          return (
+            <div key={index}>
+              <Marker
+                key={index}
+                longitude={pin.location.Longitude}
+                latitude={pin.location.Latitude}
+              >
+                <button
+                  type="button"
+                  className="cursor-pointer"
+                  onClick={(e) => handleMarkerClick(pin)}
+                >
+                  {<MdLocationOn size={30} color="red" />}
+                </button>
+              </Marker>
+
+              {showPopup && pin.id === selectedMarkerId ? (
+                <Popup
+                  offset={25}
+                  latitude={pin.location.Latitude}
+                  longitude={pin.location.Longitude}
+                  onClose={() => {
+                    setShowPopup(false);
+                  }}
+                  closeButton={false}
+                  className="rounded-lg shadow-zinc-600"
+                >
+                  <EventsPopupCard
+                    id={pin.id}
+                    name={pin.name}
+                    profile={pin.profile}
+                    location={pin.location}
+                    city={pin.city}
                     details={pin.details}
                   />
                 </Popup>

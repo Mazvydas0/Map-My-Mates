@@ -1,5 +1,4 @@
 "use client";
-import MdNotificationsNone from "react-icons/md";
 import {
   Bell,
   Calendar,

@@ -3,6 +3,8 @@ import BasicInfo from "./BasicInfo";
 import { DataTable, columns } from "../basic/DataTable";
 import DataCard from "../basic/DataDetailCard";
 import ImagesSlider from "../basic/ImagesSlider";
+import Menu from "../menu/Menu";
+import BackToHome from "../ui/backToHome";
 
 export default function FriendDetails(data: friendDetails) {
   const age = (dateOfBirth: Date) => {
@@ -25,6 +27,7 @@ export default function FriendDetails(data: friendDetails) {
 
   return (
     <div className="flex flex-col">
+      <BackToHome />
       {/* Basic Details will be here */}
       <BasicInfo
         firstName={data.firstName}
@@ -54,6 +57,9 @@ export default function FriendDetails(data: friendDetails) {
           Photos
         </div>
         <ImagesSlider images={data.Images} />
+      </div>
+      <div className="absolute z-10 bg-[#0a3d62] px-4 py-2 rounded flex ml-auto right-3 top-3">
+        <Menu />
       </div>
     </div>
   );

@@ -15,7 +15,10 @@ export default function Notifications() {
           initial="hidden"
           whileInView="show"
         >
-          <div className="bg-white opacity-100 rounded-md flex p-2 space-x-4 my-3">
+          <div
+            key={index}
+            className="bg-white opacity-100 rounded-md flex p-2 space-x-4 my-3"
+          >
             <div>
               {item.type === NotificationTypesList.Alert ? (
                 <AlertCircle />
