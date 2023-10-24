@@ -20,7 +20,6 @@ export default function MateMap() {
   const [selectedMarkerId, setSelectedMarkerId] = useState(null);
   const mapRef = useRef(null);
 
-  // Friends Pin will be coming from backend API
   useEffect(() => {
     setFriendspinData(friendsPins);
   }, []);

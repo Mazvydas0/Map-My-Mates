@@ -2,8 +2,6 @@ import FriendDetails from "@/components/friendDetails";
 import dummyFriendData from "@/assets/dummyFriendData";
 
 export default function page({ params }: { params: { id: string } }) {
-  //here call api and get friendDetails by using params.id
-
   return (
     <div>
       <FriendDetails

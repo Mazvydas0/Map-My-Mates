@@ -1,7 +1,7 @@
 "use client";
 import Notifications from "../notifications";
 import { useStateContext } from "@/lib/contextProvider";
-import Events from "../events-notifications";
+import Events from "../eventsList";
 import Chat from "../chat";
 import AddFriends from "../addFriends";
 import Profile from "../profile";

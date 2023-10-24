@@ -6,10 +6,15 @@ import { CalendarCheck, CalendarClock, CalendarDays } from "lucide-react";
 import Link from "next/link";
 import router from "next/router";
 import React from "react";
+import { DatePickerWithRange } from "../ui/date-picker-with-range";
+import { DropdownCountryList } from "./CountryList";
 
 export default function Events() {
   return (
-    <div>
+    <div className="">
+      <div className="flex space-x-2 border-b-2 border-gray-600 mb-2">
+        <DatePickerWithRange /> <DropdownCountryList />
+      </div>
       {eventsData.map((item: eventType, index) => (
         <motion.nav
           key={index}
