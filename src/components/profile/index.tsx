@@ -7,6 +7,7 @@ import { Settings } from "lucide-react";
 import Link from "next/link";
 import { eventMotions } from "@/lib/motion";
 import { motion } from "framer-motion";
+import { PrivacySetting } from "./PrivacySetting";
 
 export default function Profile() {
   const [avatar, setAvatar] = useState(
@@ -28,7 +29,7 @@ export default function Profile() {
         </div>
       </div>
       <div className="flex space-x-5 justify-center my-4 text-base">
-        <div>Edit Profile</div> <Settings />
+        <PrivacySetting />
       </div>
       <motion.nav variants={eventMotions} initial="hidden" whileInView="show">
         <UserInfo />
@@ -64,5 +65,3 @@ export default function Profile() {
     </div>
   );
 }
-
-

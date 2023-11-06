@@ -1,3 +1,9 @@
+import ChatList from "./ChatList";
+
 export default function Chat() {
-  return <div>Chat will be here</div>;
+  return (
+    <div>
+      <ChatList />
+    </div>
+  );
 }
