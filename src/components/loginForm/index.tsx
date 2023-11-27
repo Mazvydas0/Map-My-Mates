@@ -2,7 +2,6 @@
 import Image from "next/image";
 import logo from "/public/whiteLogo.png";
 import Link from "next/link";
-// import InputComponent from "@/components/user-input";
 import { useForm } from "react-hook-form";
 import * as zod from "@hookform/resolvers/zod";
 import {  userFormData,loginSchema } from "@/types/common";
