@@ -109,7 +109,7 @@ const CustomSignInForm = () => {
       hover:bg-[#0a3d62] bg-white hover:text-white rounded"
                 >
                   {" "}
-                  Login
+                  Sign in
                 </Button>
               </div>
             </form>

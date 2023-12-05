@@ -9,7 +9,7 @@ import {
 import { Settings } from "lucide-react";
 
 export function PrivacySetting() {
-  //in props you'll get user data, but for UI I'm going to use hardcoded data here
+
   return (
     <Popover>
       <PopoverTrigger asChild>

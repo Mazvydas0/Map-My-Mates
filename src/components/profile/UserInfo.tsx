@@ -7,10 +7,16 @@ import {
   AccordionTrigger,
 } from "@radix-ui/react-accordion";
 import { ChevronDown, Info } from "lucide-react";
+import { User } from "@prisma/client";
 import React, { use } from "react";
 
-export default function UserInfo() {
+interface UserInfoProps {
+  currentUser: User;
+}
+
+export default function UserInfo({ currentUser }: UserInfoProps) {
   const data = userDummyData;
+
   return (
     <div className="mt-20">
       <Accordion className="" type="single" collapsible>
@@ -26,17 +32,18 @@ export default function UserInfo() {
               <table className="w-full text-sm mt-2">
                 <tr>
                   <td className="w-1/3 font-medium bg-emerald-700/20 p-1.5">
-                    {" "}
-                    First Name
+                    Name
                   </td>
-                  <td className="w-2/3 bg-stone-300/20 p-1.5">User Name</td>
+                  <td className="w-2/3 bg-stone-300/20 p-1.5">
+                    {currentUser?.firstName}
+                  </td>
                 </tr>
                 <tr>
                   <td className="w-1/3 font-medium bg-emerald-700/20 p-1.5">
                     Last Name
                   </td>
                   <td className="w-2/3 bg-stone-300/20 p-1.5">
-                    {data.lastName}
+                    {currentUser?.lastName}
                   </td>
                 </tr>
                 <tr>
@@ -44,7 +51,7 @@ export default function UserInfo() {
                     Address
                   </td>
                   <td className="w-2/3 bg-stone-300/20 p-1.5">
-                    {data.address}
+                    {currentUser?.address}
                   </td>
                 </tr>
                 <tr>
@@ -52,7 +59,7 @@ export default function UserInfo() {
                     Nationality
                   </td>
                   <td className="w-2/3 bg-stone-300/20 p-1.5">
-                    {data.nationality}
+                    {currentUser?.Nationality}
                   </td>
                 </tr>
               </table>

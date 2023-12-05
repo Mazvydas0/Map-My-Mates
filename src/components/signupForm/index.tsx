@@ -36,8 +36,9 @@ const SignupForm = () => {
     },
   });
 
+  const firstName = watch("firstName");
+  const lastName = watch("lastName");
   const nationality = watch("Nationality");
-
   const dateOfBirth = watch("dateOfBirth");
 
   const setCustomValue = (id: string, value: any) => {
@@ -61,11 +62,11 @@ const SignupForm = () => {
     axios
       .post("/api/register", updatedData)
       .then(() => {
-        toast.success("Register Successfully!");
+        toast.success("Registered Successfully!");
         router.push("/signin");
       })
       .catch((error) => {
-        toast.error("Something went Wrong!");
+        toast.error("Something went wrong!");
       })
       .finally(() => {
         setIsLoading(false);
@@ -175,7 +176,7 @@ const SignupForm = () => {
               <div className=" flex w-full justify-center">
                 <Button
                   type="submit"
-                  className="self-end mt-10 w-20 py-2 px-4 bg  text-[#0a3d62] 
+                  className="self-end mt-10 w-30 py-2 px-4 bg  text-[#0a3d62] 
       hover:bg-[#0a3d62] bg-white hover:text-white rounded"
                 >
                   {" "}

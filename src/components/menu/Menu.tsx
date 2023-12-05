@@ -4,14 +4,18 @@ import MenuDetails from "./MenuDetails";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
+import getCurrentUser from "@/app/actions/getCurrentUser";
+import getProfileImage from "@/app/actions/getProfileImage";
 
-export default function Menu() {
+
+export default async function Menu() {
+  const currentUser: any = await getCurrentUser();
+  const profilePicture: any = await getProfileImage();
+
+
   return (
     <Sheet>
       <SheetTrigger>
@@ -20,7 +24,10 @@ export default function Menu() {
       <SheetContent>
         <div className="bg-[#dff9fb] h-screen flex flex-col">
           <SideMenuItems />
-          <MenuDetails />
+          <MenuDetails
+            currentUser={currentUser}
+            profilePicture={profilePicture}
+          />
         </div>
       </SheetContent>
     </Sheet>

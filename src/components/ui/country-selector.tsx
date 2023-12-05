@@ -4,15 +4,20 @@ import React, { useState, useMemo } from "react";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 
-function CountrySelector() {
-  const [value, setValue] = useState("");
+interface CountrySelectorProps {
+  value?: any;
+  onChange?: (value: any) => void;
+}
+function CountrySelector({ value, onChange }: CountrySelectorProps) {
   const options: any = useMemo(() => countryList().getData(), []);
 
-  const changeHandler = (value: any) => {
-    setValue(value);
-  };
-
-  return <Select options={options} value={value} onChange={changeHandler} />;
+  return (
+    <Select
+      options={options}
+      value={value}
+      onChange={(value) => onChange!(value)}
+    />
+  );
 }
 
 export default CountrySelector;

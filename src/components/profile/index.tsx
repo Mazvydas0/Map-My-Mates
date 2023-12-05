@@ -1,43 +1,110 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import UserInfo from "./UserInfo";
-import { Settings } from "lucide-react";
 import Link from "next/link";
 import { eventMotions } from "@/lib/motion";
 import { motion } from "framer-motion";
 import { PrivacySetting } from "./PrivacySetting";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { signOut } from "next-auth/react";
+import placeholderPic from "../../../public/placeholder.jpg";
+import { User, UserImage } from "@prisma/client";
+import axios from "axios";
 
-export default function Profile() {
-  const [avatar, setAvatar] = useState(
-    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&h=300"
-  );
+interface ProfileProps {
+  currentUser: User;
+  profilePicture: UserImage;
+}
+
+export default function Profile({ currentUser, profilePicture }: ProfileProps) {
+  const router = useRouter();
+  const [avatar, setAvatar] = useState(placeholderPic);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const filePickerRef: any = useRef(null);
+
+  const renderImage: any = selectedFile ? selectedFile : profilePicture?.image;
+
+  const handleImageUpload = async () => {
+    if (selectedFile) {
+      try {
+        const response = await axios.post("/api/saveImage", {
+          binaryData: selectedFile,
+        });
+
+        setSelectedFile(null);
+        if (response.status === 200) {
+          toast.success("Image saved !");
+          router.refresh();
+        } else {
+          toast.error("Failed to Save Image!");
+        }
+      } catch (error) {
+        toast.error("No Image Selected!");
+      }
+    }
+  };
+
+  // function to add image from file reader
+  const addImageToPost = (e: any) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onload = (readerEvent: any) => {
+      setSelectedFile(readerEvent.target.result);
+    };
+  };
+
+  const logoutFunction = () => {
+    toast.success("Successfully logged out !");
+    signOut();
+  };
 
   return (
     <div className="sticky top-0 left-0 right-0 z-30 ">
       <div className="bg-white w-full overflow-hidden flex absolute shadow-xl"></div>
-      <div className="relative flex justify-center">
-        <div>
+      <div className="relative flex flex-col items-center justify-center">
+        <div onClick={() => filePickerRef.current.click()}>
           <Image
-            src={avatar}
+            src={renderImage || avatar}
             alt="Profile Avatar"
             className="rounded-full w-24 h-24 cursor-pointer object-cover border-2 border-[#0a3d62]"
             width={90}
             height={90}
           />
+          <input
+            type="file"
+            hidden
+            ref={filePickerRef}
+            onChange={addImageToPost}
+          />
         </div>
+        {selectedFile && (
+          <button
+            onClick={() => handleImageUpload()}
+            className=" border bg-green-600 px-3 mt-2 rounded-xl py-1 hover:text-white"
+          >
+            Save
+          </button>
+        )}
       </div>
       <div className="flex space-x-5 justify-center my-4 text-base">
         <PrivacySetting />
       </div>
       <motion.nav variants={eventMotions} initial="hidden" whileInView="show">
-        <UserInfo />
+        <UserInfo currentUser={currentUser} />
       </motion.nav>
       <motion.nav variants={eventMotions} initial="hidden" whileInView="show">
         <div className="mt-4">
-          <Link className="w-full " href="/Logout">
-            <div className="w-full flex items-center justify-between bg-white hover:bg-slate-300 transition-all duration-200 px-3 py-1">
+          <Link className="w-full " href="">
+            <div
+              onClick={() => logoutFunction()}
+              className="w-full flex items-center justify-between bg-white hover:bg-slate-300 transition-all duration-200 px-3 py-1"
+            >
               <div className="flex items-center gap-8">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
