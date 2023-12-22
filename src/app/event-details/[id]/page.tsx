@@ -1,19 +1,34 @@
-import FriendDetails from "@/components/friendDetails";
-
 import EventDetails from "@/components/eventDetails";
-import eventsData from "@/assets/eventsDummyData";
+import { getEventOwnerDetails } from "@/app/actions/getEventOwnerDetails";
+import {
+  getEventDetailsByID,
+  getEventDetailsByIDProps,
+} from "@/app/actions/getEventDetailsById";
+import getCurrentUser from "@/app/actions/getCurrentUser";
 
-export default function page({ params }: { params: { id: string } }) {
+export default async function page({
+  params,
+}: {
+  params: getEventDetailsByIDProps;
+}) {
+  const currentUser: any = await getCurrentUser();
+  const getEventOwner = await getEventOwnerDetails(params);
+  const getEventDetails = await getEventDetailsByID(params);
+
   return (
     <div>
       <EventDetails
-        details={eventsData[0].details}
-        type={eventsData[0].type}
-        id={eventsData[0].id}
-        name={eventsData[0].name}
-        city={eventsData[0].city}
-        location={eventsData[0].location}
-        profile={eventsData[0].profile}
+        details={getEventDetails?.detail}
+        type={getEventDetails?.city}
+        id={getEventDetails?.id}
+        name={getEventDetails?.name}
+        city={getEventDetails?.city}
+        location={getEventDetails?.city}
+        profile={getEventDetails?.eventImage}
+        EventOwner={getEventOwner}
+        EventDetails={getEventDetails}
+        currentUser={currentUser}
+        params={params}
       />
     </div>
   );

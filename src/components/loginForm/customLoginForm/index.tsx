@@ -26,13 +26,15 @@ const CustomSignInForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
-    signIn("credentials", {
-      ...data,
-      redirect: false,
-    }).then((callback) => {
+    try {
+      const callback = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+
       setIsLoading(false);
 
       if (callback?.ok) {
@@ -42,8 +44,11 @@ const CustomSignInForm = () => {
 
       if (callback?.error) {
         toast.error(callback.error);
+        throw new Error(callback.error);
       }
-    });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

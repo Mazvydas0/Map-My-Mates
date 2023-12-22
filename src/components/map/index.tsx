@@ -10,19 +10,43 @@ import { useEffect, useState, useRef } from "react";
 import friendsPins from "@/assets/FriendsPinsData";
 import { MdLocationOn } from "react-icons/md";
 import FriendsPopupCard from "../basic/FriendsPopupCard";
-import eventsData from "@/assets/eventsDummyData";
 import EventsPopupCard from "../basic/EventsPopupCard";
 
-export default function MateMap() {
+interface MateMapProps {
+  EventList: any;
+}
+
+export default function MateMap({ EventList }: MateMapProps) {
   let [showPopup, setShowPopup] = useState<boolean>();
-  const [friendspinData, setFriendspinData] = useState(friendsPins);
-  const [eventsPinData, setEventsPinData] = useState(eventsData);
+  const [friendsPinData, setFriendsPinData] = useState(friendsPins);
+  const [eventsPinData, setEventsPinData] = useState(EventList);
   const [selectedMarkerId, setSelectedMarkerId] = useState(null);
-  const mapRef = useRef(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const mapRef: any = useRef(null);
 
   useEffect(() => {
-    setFriendspinData(friendsPins);
+    setFriendsPinData(friendsPins);
   }, []);
+
+  useEffect(() => {
+    setEventsPinData(EventList);
+    // move the map to the newly created event location
+    if (mapLoaded && EventList.length > 0 && mapRef.current) {
+      const latestEvent = EventList[EventList.length - 1];
+      mapRef.current.getMap().flyTo({
+        latitude: latestEvent.latitude,
+        longitude: latestEvent.longitude,
+        zoom: 12,
+      });
+    }
+  }, [mapLoaded, EventList]);
+
+  // setting mapLoaded to true, when map's loaded
+  useEffect(() => {
+    if (mapRef.current) {
+      setMapLoaded(true);
+    }
+  }, [mapRef]);
 
   const handleMarkerClick = (pin: any) => {
     setTimeout(() => {
@@ -30,6 +54,15 @@ export default function MateMap() {
       setSelectedMarkerId(pin.id);
     }, 10);
   };
+
+  const currentDate = new Date();
+
+  // filtering events of the future
+  const futureEvents = eventsPinData?.filter((event: any) => {
+    const eventStartDate = new Date(event.date);
+    return eventStartDate > currentDate;
+  });
+
   return (
     <div className="flex-1 h-full">
       <Map
@@ -43,7 +76,7 @@ export default function MateMap() {
         <GeolocateControl position="top-left" />
         <NavigationControl position="top-left" />
 
-        {friendspinData.map((pin, index) => {
+        {friendsPinData.map((pin, index) => {
           return (
             <div key={index}>
               <Marker
@@ -85,13 +118,13 @@ export default function MateMap() {
           );
         })}
 
-        {eventsPinData.map((pin, index) => {
+        {futureEvents?.map((pin: any, index: any) => {
           return (
             <div key={index}>
               <Marker
                 key={index}
-                longitude={pin.location.Longitude}
-                latitude={pin.location.Latitude}
+                longitude={pin?.longitude}
+                latitude={pin?.latitude}
               >
                 <button
                   type="button"
@@ -105,8 +138,8 @@ export default function MateMap() {
               {showPopup && pin.id === selectedMarkerId ? (
                 <Popup
                   offset={25}
-                  latitude={pin.location.Latitude}
-                  longitude={pin.location.Longitude}
+                  latitude={pin?.latitude}
+                  longitude={pin?.longitude}
                   onClose={() => {
                     setShowPopup(false);
                   }}
@@ -114,12 +147,12 @@ export default function MateMap() {
                   className="rounded-lg shadow-zinc-600"
                 >
                   <EventsPopupCard
-                    id={pin.id}
-                    name={pin.name}
-                    profile={pin.profile}
-                    location={pin.location}
-                    city={pin.city}
-                    details={pin.details}
+                    id={pin?.id}
+                    name={pin?.name}
+                    profile={pin?.eventImage}
+                    location={pin?.city}
+                    city={pin?.city}
+                    details={pin?.detail}
                   />
                 </Popup>
               ) : null}

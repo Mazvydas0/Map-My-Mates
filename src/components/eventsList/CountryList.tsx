@@ -11,7 +11,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import countriesList from "@/assets/countryList";
 
-export function DropdownCountryList() {
+interface DropdownCountryListProps {
+  onChange: (country: string | null) => void;
+}
+
+export function DropdownCountryList({ onChange }: DropdownCountryListProps) {
+  const handleCountryChange = (country: string | null) => {
+    onChange(country);
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -25,7 +32,10 @@ export function DropdownCountryList() {
         <DropdownMenuGroup>
           {countriesList.map((country, index) => {
             return (
-              <DropdownMenuItem key={index}>
+              <DropdownMenuItem
+                key={index}
+                onClick={() => handleCountryChange(country)}
+              >
                 <span>{country}</span>
               </DropdownMenuItem>
             );

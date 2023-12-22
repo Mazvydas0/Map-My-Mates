@@ -1,10 +1,6 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import pic1 from "/public/pic1.jpg";
-import pic2 from "/public/pic2.jpg";
-import pic3 from "/public/pic3.jpg";
-import pic4 from "/public/pic4.jpg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -12,46 +8,64 @@ import Slider from "react-slick";
 import { useEffect, useRef } from "react";
 
 export default function ImageSlider({ images }: any) {
-  var settings = {
-    dots: true,
+  const initialSlidesToShow = images?.length > 2 ? 3 : images?.length;
+  //Math.min(images?.length, 3)
+  let settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
     slidesToScroll: 1,
-    draggable: true,
-    arrows: true,
-    centerPadding: "100px",
+    slidesToShow: initialSlidesToShow,
+    arrows: false,
+    dots: true,
+    swipeToSlide: true,
+    centerPadding: "50px",
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
         },
       },
       {
-        breakpoint: 800,
+        breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
+          slidesToShow: 3,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 1020,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 1000,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 770,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
         },
       },
       {
         breakpoint: 320,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1,
         },
       },
     ],
@@ -71,25 +85,24 @@ export default function ImageSlider({ images }: any) {
       window.removeEventListener("wheel", scroll, true);
     };
   }, []);
+
   return (
-    <div className="pt-10  mx-5">
-      {
-        <Slider {...settings} ref={slider}>
-          {images.map((image: any, index: any) => {
-            return (
-              <div key={index}>
-                <Image
-                  className="object-cover"
-                  width={180}
-                  height={180}
-                  alt=""
-                  src={image}
-                />
-              </div>
-            );
-          })}
+    <div className="pt-10 mx-5 lg:mx-14">
+      {images && images?.length > 0 && (
+        <Slider ref={slider} {...settings}>
+          {images?.map((image: any, index: any) => (
+            <div key={index}>
+              <Image
+                className="object-cover"
+                width={180}
+                height={180}
+                alt=""
+                src={image}
+              />
+            </div>
+          ))}
         </Slider>
-      }
+      )}
     </div>
   );
 }

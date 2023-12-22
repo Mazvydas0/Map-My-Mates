@@ -1,5 +1,3 @@
-import userDummyData from "@/assets/userDummyData";
-import { UserProfile } from "@/types/userProfileType";
 import {
   Accordion,
   AccordionContent,
@@ -15,7 +13,6 @@ interface UserInfoProps {
 }
 
 export default function UserInfo({ currentUser }: UserInfoProps) {
-  const data = userDummyData;
 
   return (
     <div className="mt-20">

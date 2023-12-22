@@ -49,28 +49,29 @@ const SignupForm = () => {
     });
   };
 
-  const OnSubmit: SubmitHandler<FieldValues> = (data) => {
+  const OnSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
-    const nationalityValue = nationality?.label;
+    try {
+      const nationalityValue = nationality?.label;
 
-    const updatedData = {
-      ...data,
-      Nationality: nationalityValue,
-    };
+      const updatedData = {
+        ...data,
+        Nationality: nationalityValue,
+      };
 
-    axios
-      .post("/api/register", updatedData)
-      .then(() => {
+      const response = await axios.post("/api/register", updatedData);
+
+      if (response.status >= 200 && response.status < 300) {
         toast.success("Registered Successfully!");
         router.push("/signin");
-      })
-      .catch((error) => {
-        toast.error("Something went wrong!");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      } else {
+        toast.error("Registration was unsuccessful!");
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

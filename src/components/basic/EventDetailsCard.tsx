@@ -8,7 +8,7 @@ export default function EventDetailsCard({ data }: any) {
          flex flex-col md:flex-row justify-between"
       >
         <div className="md:ml-10">
-          <Image alt="event image" width={80} height={80} src={data.profile} />
+          <Image alt="event image" width={80} height={80} src={data?.eventImage} />
         </div>
         <div>
           <p className="text-[#0a3d62] font-bold text-base">{data.name}</p>

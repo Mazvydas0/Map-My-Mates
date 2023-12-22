@@ -35,7 +35,7 @@ export default function Profile({ currentUser, profilePicture }: ProfileProps) {
         });
 
         setSelectedFile(null);
-        if (response.status === 200) {
+        if (response.status >= 200 && response.status < 300) {
           toast.success("Image saved !");
           router.refresh();
         } else {
